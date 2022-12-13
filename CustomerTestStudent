@@ -1,0 +1,37 @@
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+
+public class CustomerTestStudent {
+	Customer c1, c2;
+	@Before
+	public void setUp() throws Exception {
+		c1 = new Customer("Joe", 19);
+		c2 = new Customer("Joel", 45);
+		
+	}
+	@After
+	public void tearDown() throws Exception {
+		c1 = c2 = null;
+	}
+	
+	@Test
+	public void testGetAge() {
+		assertEquals(19, c1.getAge());
+		assertEquals(45, c2.getAge());
+	}
+	@Test 
+	public void testGetName() {
+		assertEquals("Joe",c1.getName());
+		assertEquals("Joel", c2.getName());
+	}
+	@Test 
+	public void testToString() {
+		assertEquals("Joe,19",c1.toString());
+		assertEquals("Joel,45", c2.toString());
+	}
+}
