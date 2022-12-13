@@ -1,0 +1,146 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class BevShop implements BevShopInterface{
+	
+	int alcoholicDrinks = 0;
+	ArrayList<Order> orders = new ArrayList<Order>();
+	Customer person;
+	int currentOrder;
+	
+	public BevShop() {
+		
+	}
+	@Override
+	public boolean isValidTime(int time) {
+		if(time > 8 && time < 23) 
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public int getMaxNumOfFruits() {
+		return MAX_FRUIT;
+	}
+
+	@Override
+	public int getMinAgeForAlcohol() {
+		return MIN_AGE_FOR_ALCOHOL;
+	}
+
+	@Override
+	public boolean isMaxFruit(int numOfFruits) {
+		if(numOfFruits > 3) 
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public int getMaxOrderForAlcohol() {
+		return MAX_ORDER_FOR_ALCOHOL;
+	}
+
+	@Override
+	public boolean isEligibleForMore() {
+		if(alcoholicDrinks >= MAX_ORDER_FOR_ALCOHOL)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public int getNumOfAlcoholDrink() {
+		return alcoholicDrinks;
+	}
+
+	@Override
+	public boolean isValidAge(int age) {
+		if(age >= MIN_AGE_FOR_ALCOHOL)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public void startNewOrder(int time, Day day, String customerName, int customerAge) {
+		person = new Customer(customerName, customerAge);
+		Order newOrder = new Order(time, day, person);
+		orders.add(newOrder);
+		currentOrder = orders.indexOf(newOrder);
+	}
+
+	@Override
+	public void processCoffeeOrder(String bevName, Size size, boolean extraShot, boolean extraSyrup) {
+		getCurrentOrder().addNewBeverage(bevName, size, extraShot, extraSyrup);
+	}
+
+	@Override
+	public void processAlcoholOrder(String bevName, Size size) {
+		getCurrentOrder().addNewBeverage(bevName, size);
+		alcoholicDrinks++;
+	}
+
+	@Override
+	public void processSmoothieOrder(String bevName, Size size, int numOfFruits, boolean addProtein) {
+		getCurrentOrder().addNewBeverage(bevName, size, numOfFruits, addProtein);	
+	}
+
+	@Override
+	public int findOrder(int orderNo) {
+		int orderIndex = -1;
+		for(int x = 0; x < orders.size(); x++) {
+			if(orders.get(x).getOrderNo() == orderNo) {
+				return x;
+			}
+		}
+		return orderIndex;
+	}
+
+	@Override
+	public double totalOrderPrice(int orderNo) {
+		return orders.get(findOrder(orderNo)).calcOrderTotal();
+	}
+
+	@Override
+	public double totalMonthlySale() {
+		double total = 0.0;
+		for(int x = 0; x < orders.size(); x++) {
+			total += orders.get(x).calcOrderTotal();
+		}
+		return total;
+	}
+
+	@Override
+	public int totalNumOfMonthlyOrders() {
+		return orders.size();
+	}
+
+	@Override
+	public Order getCurrentOrder() {
+		return orders.get(currentOrder);
+	}
+
+	@Override
+	public Order getOrderAtIndex(int index) {
+		return orders.get(index);
+	}
+
+	@Override
+	public void sortOrders() {
+		int min;
+	    for (int index = 0; index < orders.size() - 1; index++)
+	    {
+	       min = index;
+	       for (int scan = index+1; scan < orders.size(); scan++) {
+	    	   if (orders.get(scan).getOrderNo() < (orders.get(min).getOrderNo())) {
+	               min = scan;
+	               // Swap the values
+	       		   Collections.swap(orders, min, scan);
+	    	   }
+	       }
+	    }
+	}	
+}
