@@ -1,0 +1,74 @@
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+
+public class AlcoholTestStudent {
+	Alcohol a1, a2, a3, a4;
+	@Before
+	public void setUp() throws Exception {
+		a1 = new Alcohol("Pink Witney", Size.LARGE, false);
+		a2 = new Alcohol("Vodka Tonic", Size.MEDIUM, true);
+		a3 = new Alcohol("Pink Witney", Size.SMALL, false);
+		a4 = new Alcohol("Pink Witney", Size.SMALL, false);
+
+
+	}
+	@After
+	public void tearDown() throws Exception {
+		a1 = a2 = a3 = a4 = null;
+	}
+	
+	@Test
+	public void testCalcPrice() {
+		assertEquals(4, a1.calcPrice(), .001);
+		assertEquals(3.60, a2.calcPrice(), .001);
+		assertEquals(2, a3.calcPrice(), .001);
+		
+	}
+	@Test 
+	public void testIsWeekend() {
+		assertFalse(a1.isWeekend);
+		assertTrue(a2.isWeekend);
+		assertFalse(a3.isWeekend);
+		
+	}
+	@Test 
+	public void testEquals() {
+		assertFalse(a1.equals(a3));
+		assertTrue(a3.equals(a4));
+	}
+	@Test
+	public void testGetBasePrice() {
+		assertEquals(2, a1.getBasePrice(), .001);
+	}
+	@Test 
+	public void testGetBevName() {
+		assertEquals("Vodka Tonic", a2.getBevName());
+	}
+	@Test 
+	public void testGetSize() {
+		assertEquals(Size.SMALL, a3.getSize());
+		assertEquals(Size.MEDIUM, a2.getSize());
+		assertEquals(Size.LARGE, a1.getSize());
+		assertEquals(Size.SMALL, a4.getSize());
+
+	}
+	@Test 
+	public void testGetType() {
+		assertEquals(Type.ALCOHOL, a1.getType());
+		assertEquals(Type.ALCOHOL, a2.getType());
+		assertEquals(Type.ALCOHOL, a3.getType());
+		assertEquals(Type.ALCOHOL, a4.getType());
+
+	}
+	
+	@Test 
+	public void testToString() {
+		assertEquals("Pink Witney,LARGE,this is not offered on the weekends,4.0", a1.toString());
+	}
+}
+
+
