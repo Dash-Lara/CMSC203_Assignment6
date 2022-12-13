@@ -1,0 +1,30 @@
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class TypeTestStudent {
+	Type t1, t2, t3;
+	@Before
+	public void setUp() {
+	t1 = Type.ALCOHOL;
+	t2 = Type.COFFEE;
+	t3 = Type.SMOOTHIE;
+	}
+	@After
+	public void tearDown() {
+		t1 = t2 = t3 = null;
+	}
+	@Test
+	public void testValues() {
+		assertFalse(t1.equals(Type.COFFEE));
+		assertTrue(t1.equals(Type.ALCOHOL));
+		
+		assertFalse(t2.equals(Type.ALCOHOL));
+		assertTrue(t2.equals(Type.COFFEE));
+		
+		assertFalse(t3.equals(Type.COFFEE));
+		assertTrue(t3.equals(Type.SMOOTHIE));
+	}
+}
