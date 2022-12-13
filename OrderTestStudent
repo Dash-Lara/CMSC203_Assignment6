@@ -1,0 +1,95 @@
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class OrderTestStudent {
+	Order o1, o2, o3, o4;
+
+	@Before
+	public void setUp() throws Exception {
+		 o1 = new Order(1, Day.FRIDAY, new Customer("Joey",45));
+		 o1.addNewBeverage("Mojito", Size.LARGE);
+
+		 o2 = new Order(10, Day.SATURDAY, new Customer("Sam",21)); 
+		 o2.addNewBeverage("Sidecar", Size.MEDIUM);
+		 
+		 o3 = new Order(12, Day.MONDAY, new Customer("June",40));
+		 o3.addNewBeverage("Latte", Size.LARGE, true, false);
+		 o3.addNewBeverage("Margarita", Size.SMALL);
+		 o3.addNewBeverage("Gin", Size.SMALL);
+
+		 
+		 o4 = new Order(24, Day.TUESDAY, new Customer("Joey",44));
+		 o4.addNewBeverage("Mojito", Size.LARGE);
+
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		o1 = o2 = o3 = o4 = null;
+	}
+	
+	@Test
+	public void testAddNewBeverage() {
+		assertEquals(Type.ALCOHOL, o1.getBeverage(0).getType());
+		assertEquals(1, o1.getTotalItems());
+	}
+	@Test 
+	public void testCalcOrderTotal() {
+		assertEquals(8.5, o3.calcOrderTotal(), .001);
+	}
+	@Test 
+	public void testCompareTo() {
+		assertEquals(0, o1.compareTo(o1));
+		assertEquals(1, o1.compareTo(o2));
+		assertEquals(-1, o2.compareTo(o1));
+	}
+	@Test 
+	public void testFindNumOfBeveType() {
+		assertEquals(2, o3.findNumOfBeveType(Type.ALCOHOL));
+		assertEquals(1, o3.findNumOfBeveType(Type.COFFEE));
+
+	}
+	@Test 
+	public void testGetBeverage() {
+		assertEquals(Type.COFFEE, o3.getBeverage(0).getType());
+		assertEquals("Mojito", o4.getBeverage(0).getBevName());
+	}
+	@Test 
+	public void testGetCustomer() {
+		assertEquals(40, o3.getCustomer().getAge());
+		assertEquals("Joey", o4.getCustomer().getName());
+		assertEquals("Sam", o2.getCustomer().getName());
+	}
+	@Test 
+	public void testGetOrderDay() {
+		assertEquals(Day.FRIDAY, o1.getDay());
+		assertEquals(Day.SATURDAY, o2.getDay());
+	}
+	@Test 
+	public void testGetOrderTime() {
+		assertEquals(1,o1.getOrderTime());
+		assertEquals(10, o2.getOrderTime());
+		assertEquals(12, o3.getOrderTime());
+		assertEquals(24, o4.getOrderTime());
+
+	}
+	@Test 
+	public void testGetTotalItems() {
+		assertEquals(3, o3.getTotalItems());
+		assertEquals(1, o4.getTotalItems());
+	}
+	@Test 
+	public void testIsWeekend() {
+		assertTrue(o2.isWeekend());
+		assertFalse(o1.isWeekend());
+	}
+	@Test 
+	public void testToString() {
+		assertEquals(o3.getOrderNo() + ",12,MONDAY,June,40,Latte,LARGE,has extra shot,does not have"
+				+ " extra syrup,4.5,Margarita,SMALL,this is not offered on the weekends,2.0,"
+				+ "Gin,SMALL,this is not offered on the weekends,2.0",o3.toString());
+	}
+}
