@@ -1,0 +1,50 @@
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class SmoothieTestStudent {
+	Smoothie s1, s2, s3, s4;
+	@Before
+	public void setUp() throws Exception{
+		s1 = new Smoothie("Bananarama", Size.LARGE, 4, false);
+		s2 = new Smoothie("Pink Crush", Size.MEDIUM, 1, true);
+		s3 = new Smoothie("Bananarama", Size.LARGE, 4, false);
+		s4 = new Smoothie("Pink Crush", Size.MEDIUM, 2, true);
+	}
+	@After
+	public void tearDown() throws Exception{
+		s1 = s2 = s3 = s4 = null;
+	}
+	
+	
+	@Test
+	public void testGetNumOfFruits() {
+		assertEquals(4, s1.getNumOfFruits());
+		assertEquals(1, s2.getNumOfFruits());
+		assertEquals(2, s4.getNumOfFruits());
+		assertEquals(4, s3.getNumOfFruits());
+	}
+	@Test 
+	public void testGetAddProtein() {
+		assertTrue(s2.getAddProtein());
+		assertFalse(s3.getAddProtein());
+	}
+	@Test 
+	public void testCalcPrice() {
+		assertEquals(6, s1.calcPrice(), .001);
+		assertEquals(5, s2.calcPrice(),.001);
+		assertEquals(5.5, s4.calcPrice(),.001);
+	}
+	@Test
+	public void testEquals() {
+		assertTrue(s1.equals(s3));
+		assertFalse(s2.equals(s4));
+		
+	}
+	@Test 
+	public void testToString() {
+		assertEquals("Bananarama,LARGE,protein not added,4,6.0", s1.toString());
+	}
+}
