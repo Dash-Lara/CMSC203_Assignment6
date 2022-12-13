@@ -1,0 +1,56 @@
+
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+
+public class CoffeeTestStudent {
+	Coffee c1, c2, c3, c4;
+	@Before
+	public void setUp() throws Exception {
+		c1 = new Coffee("Mocha", Size.LARGE, true, false);
+		c2 = new Coffee("Latte" , Size.MEDIUM, true, true);
+		c3 = new Coffee("Mocha", Size.LARGE, false, true);
+		c4 = new Coffee("Mocha", Size.LARGE, false, true);
+
+	}
+	@After
+	public void tearDown() throws Exception {
+		c1 = c2 = c3 = null;
+	}
+	
+	@Test
+	public void testGetExtraShot() {
+		assertTrue(c1.getExtraShot());
+		assertTrue(c2.getExtraShot());
+		assertFalse(c3.getExtraShot());
+	}
+	@Test 
+	public void testGetExtraSyrup() {
+		assertFalse(c1.getExtraSyrup());
+		assertTrue(c2.getExtraSyrup());
+		assertTrue(c3.getExtraSyrup());
+	}
+	@Test
+	public void testCalcPrice() {
+		assertEquals(4.5, c1.calcPrice(),.001);
+		assertEquals(4, c2.calcPrice(), .001);
+		assertEquals(4.5, c3.calcPrice(), .001);
+	}
+	
+	@Test 
+	public void testEquals() {
+		assertFalse(c1.equals(c3));
+		assertTrue(c3.equals(c4));
+		
+	}
+	@Test 
+	public void testToString() {
+		assertEquals("Mocha,LARGE,has extra shot,does not have extra syrup,4.5", c1.toString());
+		assertEquals("Mocha,LARGE,does not have extra shot,has extra syrup,4.5", c3.toString());
+
+	}
+}
