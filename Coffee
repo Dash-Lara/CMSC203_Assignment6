@@ -1,0 +1,61 @@
+
+public class Coffee extends Beverage{
+	//Not sure about this 
+	boolean extraShot = false;
+	boolean extraSyrup = false;
+	final static double  EXTRA_SHOT_COST = 0.50;
+	final static double EXTRA_SYRUP_COST = 0.50;
+
+	
+	Coffee(String bevName, Size size, boolean extraShot, boolean extraSyrup){
+		super(bevName,Type.COFFEE, size);
+		this.extraShot = extraShot;
+		this.extraSyrup = extraSyrup;
+	}
+	public boolean getExtraShot() {
+		return extraShot;
+	}
+	public boolean getExtraSyrup() {
+		return extraSyrup;
+	}
+	@Override
+	public double calcPrice() {
+		double price = super.addSizePrice();
+		if(extraShot) {
+			price += EXTRA_SHOT_COST;
+		}
+		if(extraSyrup) {
+			price += EXTRA_SYRUP_COST;
+		}
+		return price;
+	}
+
+	@Override
+	public String toString() {
+		String temp = "";
+		temp = this.bevName + "," + this.size;
+		if(extraShot) {
+			temp += ",has extra shot";
+		}
+		else {
+			temp += ",does not have extra shot";
+		}
+		if(extraSyrup) {
+			temp += ",has extra syrup";
+		}
+		else {
+			temp += ",does not have extra syrup";
+		}
+		temp += "," + calcPrice();
+		return temp;
+	}
+	@Override
+	public boolean equals(Object anotherBev) {
+		if((super.equals(anotherBev)) && this.extraShot == ((Coffee)anotherBev).getExtraShot() && this.extraSyrup == ((Coffee)anotherBev).getExtraSyrup()) {
+			return true;
+		}
+		else {
+			return false;
+		}		
+	}
+}
