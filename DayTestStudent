@@ -1,0 +1,46 @@
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class DayTestStudent {
+	Day d1, d2, d3, d4, d5, d6, d7;
+	@Before
+	public void setUp() {
+	d1 = Day.FRIDAY;
+	d2 = Day.MONDAY;
+	d3 = Day.SATURDAY;
+	d4 = Day.SUNDAY;
+	d5 = Day.THURSDAY;
+	d6 = Day.TUESDAY;
+	d7 = Day.WEDNESDAY;
+	}
+	@After
+	public void tearDown() {
+		d1 = d2 = d3 = d4 = d5 = d6 = d7 = null;
+	}
+	@Test
+	public void testValues() {
+		assertFalse(d1.equals(Day.MONDAY));
+		assertTrue(d1.equals(Day.FRIDAY));
+		
+		assertFalse(d2.equals(Day.FRIDAY));
+		assertTrue(d2.equals(Day.MONDAY));
+		
+		assertFalse(d3.equals(Day.MONDAY));
+		assertTrue(d3.equals(Day.SATURDAY));
+		
+		assertFalse(d4.equals(Day.MONDAY));
+		assertTrue(d4.equals(Day.SUNDAY));
+		
+		assertFalse(d5.equals(Day.FRIDAY));
+		assertTrue(d5.equals(Day.THURSDAY));
+		
+		assertFalse(d6.equals(Day.MONDAY));
+		assertTrue(d6.equals(Day.TUESDAY));
+		
+		assertFalse(d7.equals(Day.MONDAY));
+		assertTrue(d7.equals(Day.WEDNESDAY));
+	}
+}
