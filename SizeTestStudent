@@ -1,0 +1,24 @@
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class SizeTestStudent {
+	Size s1;
+	@Before
+	public void setUp() {
+	s1 = Size.LARGE;
+	
+	}
+	@After
+	public void tearDown() {
+		s1 = null;
+	}
+	@Test
+	public void testValues() {
+		assertFalse(s1.equals(Size.MEDIUM));
+		assertTrue(s1.equals(Size.LARGE));
+	}
+	
+}
