@@ -1,0 +1,118 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Order implements OrderInterface, Comparable<Order>{
+	int orderTime, orderNum;
+	Day orderDay;
+	Customer cust;
+	ArrayList<Beverage> drinks = new ArrayList<Beverage>();
+	
+	public Order(int orderTime, Day orderDay, Customer cust){
+		this.orderTime = orderTime;
+		this.orderDay = orderDay;
+		this.cust = new Customer(cust);
+		this.orderNum = generateOrder();
+	}
+	
+	public int generateOrder() {
+		Random rand = new Random();
+		orderNum = rand.nextInt(10000, 90000);
+		return orderNum;
+	}
+	
+	public int getOrderNo() {
+		return orderNum;
+	}
+	
+	public Day getOrderDay() {
+		return orderDay;
+	}
+	
+	public Customer getCustomer() {
+		return cust;
+	}
+	public int getOrderTime() {
+		return orderTime;
+	}
+	public Day getDay() {
+		return orderDay;
+	}
+	
+	public int getTotalItems() {
+		
+		return drinks.size();
+	}
+	
+	@Override
+	public boolean isWeekend(){
+		if(orderDay == Day.SATURDAY || orderDay == Day.SUNDAY)
+			return true;
+		else
+			return false;
+	}
+	
+
+	@Override
+	public Beverage getBeverage(int itemNo) {	
+		Beverage beverage;
+		beverage = drinks.get(itemNo);
+		return beverage;
+	}
+
+	@Override
+	public void addNewBeverage(String bevName, Size size, boolean extraShot, boolean extraSyrup) {
+		drinks.add(new Coffee(bevName, size, extraShot,extraSyrup));
+		
+	}
+
+	@Override
+	public void addNewBeverage(String bevName, Size size) {
+		drinks.add(new Alcohol(bevName, size, isWeekend()));
+	}
+
+	@Override
+	public void addNewBeverage(String bevName, Size size, int numOfFruits, boolean addProtein) {
+		drinks.add(new Smoothie(bevName, size, numOfFruits, addProtein));
+	}
+
+	@Override
+	public double calcOrderTotal() {
+		double total = 0.0;
+		for(int x = 0; x < drinks.size(); x++) {
+			total += drinks.get(x).calcPrice();
+		}
+		return total;
+	}
+
+	@Override
+	public int findNumOfBeveType(Type type) {
+		int count = 0;
+		for(int x = 0; x < drinks.size(); x++) {
+			if(drinks.get(x).getType() == type) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	@Override
+	public int compareTo(Order anotherOrder) {
+		if(this.orderNum == anotherOrder.getOrderNo())
+			return 0;
+		else if(this.orderNum < anotherOrder.orderNum)			
+			return -1;		
+		else	
+			return 1;
+	}
+	@Override
+	public String toString() {
+		String temp = this.orderNum + "," + this.orderTime + "," + this.orderDay + "," + this.cust.getName() + "," +
+	    this.cust.getAge();
+		
+		for(int x = 0; x < drinks.size(); x++) {
+			temp += "," + drinks.get(x).toString();
+		}
+		return temp;
+	}
+
+}
